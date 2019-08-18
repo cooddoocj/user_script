@@ -25,6 +25,8 @@
 (function ($, window, document) {
     'use strict';
 
+    var chapStart = 0;
+
     /**
      * Nhận cảnh báo khi có chương bị lỗi
      */
@@ -41,9 +43,9 @@
     converter = new RegExp('(' + converter + ')', 'i');
 
     function cleanHtml(str) {
+    	str = str.replace(/\.(?:\s*\.)+/, '...');
+    	str = str.replace(/"\.\.\."/, '"Lặng!"');
         str = str.replace(/\s*Chương\s*\d+\s?:[^<\n]/, '');
-        str = str.replace(/\"\. \. \.\"/g, '"Lặng!"');
-        str = str.replace(/đồ.{1,3}vật/g, 'đồ vật');
         str = str.replace(/[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD\u10000-\u10FFFF]+/gm, ''); // eslint-disable-line
         str = str.replace(/\s[a-zA-Z0-9]{6,8}(="")?\s/gm, function (key, attr) {
             if (attr) return ' ';
@@ -168,7 +170,7 @@
             if (count === 0) begin = chapTitle;
             end = chapTitle;
 
-            $download.html('Đang tải: ' + Math.floor((count / chapListSize) * 100) + '%');
+            $download.html(count + '/' + chapListSize);
 
             count++;
             document.title = '[' + count + '] ' + pageName;
@@ -200,7 +202,7 @@
         chapListSize = 0,
         chapId = '',
         chapTitle = '',
-        count = 0,
+        count = chapStart,
         begin = '',
         end = '',
         endDownload = false,
