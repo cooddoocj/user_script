@@ -45,7 +45,7 @@
     function cleanHtml(str) {
     	str = str.replace(/\.(?:\s*\.)+/, '...');
     	str = str.replace(/"\.\.\."/, '"Lặng!"');
-    	str = str.replace(/ ah/gmi, 'a');
+    	str = str.replace(/ ah/gmi, ' a');
         str = str.replace(/\s*Chương\s*\d+\s?:[^<\n]/, '');
         str = str.replace(/[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD\u10000-\u10FFFF]+/gm, ''); // eslint-disable-line
         str = str.replace(/\s[a-zA-Z0-9]{6,8}(="")?\s/gm, function (key, attr) {
